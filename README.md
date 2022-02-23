@@ -18,9 +18,9 @@ Here is an example script using bb-rename.
   (mv/format :ext #"^$" :ext "%g")                ; add an extension to files without one
   ;                     ^ optional, same as the first if left out
   (mv/replace :ext #"^(?:jpeg|jfif)$" "jpg")      ; regularize jpeg extensions to jpg
-  (mv/format :name #"Untitled" "%tFT%tH:%tM:%tS") ; renames Untitled files to a timestamp
-  (mv/set :name (constantly true) #(str/trim (mv/access :name %)))    ; unconditionally trim all names
-  (mv/substitute :ext #"^pdf$" :parent (str (fs/home) "/Documents")) ; moves pdfs to ~/Documents.
+  (mv/format :name #"Untitled" "%tFT%tH:%tM:%tS") ; rename Untitled files to a timestamp
+  (mv/set :name (constantly true) #(str/trim (mv/access :name %)))   ; unconditionally trim all names
+  (mv/substitute :ext #"^pdf$" :parent (str (fs/home) "/Documents")) ; move pdfs to ~/Documents.
 
  nil ; don't print out the result of mv/rename
 ```
@@ -47,10 +47,10 @@ as output. They don't rename any files physically. A change is a map
 with two keys, :old and :new, associated with the original path of the
 file and the new path of the file respectively.
 
-A **part** of a path means either the full :path, the file's :parent,
-the :file's full name, the :name of the file without the extension, or
-its __:ext__ension. If the name or extension is missing from the file
-name, an empty string is given.
+A **part** of a path is either the full :path, the file's :parent, the
+:file's full name, the :name of the file without the extension, or its
+extension with :ext. If the name or extension is missing from the file
+name, an empty string is given in its place.
 
     /home/$USER/Downloads/name.png
     ------------------------------ :path
